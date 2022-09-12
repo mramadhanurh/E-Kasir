@@ -64,7 +64,7 @@
           </div>
           <!-- /.col -->
 
-              <!-- Modal Add Data -->
+    <!-- Modal Add Data -->
     <div class="modal fade" id="add-data">
         <div class="modal-dialog">
           <div class="modal-content">
