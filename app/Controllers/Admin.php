@@ -3,9 +3,15 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\ModelAdmin;
 
 class Admin extends BaseController
 {
+    public function __construct()
+    {
+        $this->ModelAdmin = new ModelAdmin();
+    }
+
     public function index()
     {
         $data = [
@@ -22,11 +28,27 @@ class Admin extends BaseController
     {
         $data = [
             'judul' => 'Setting',
-            'subjudul' => '',
+            'subjudul' => 'Setting',
             'menu' => 'setting',
             'submenu' => '',
             'page' => 'v_setting',
+            'setting' => $this->ModelAdmin->DetailData(),
         ];
         return view('v_template', $data);
+    }
+
+    public function UpdateSetting()
+    {
+        $data = [
+            'id' => '1',
+            'nama_toko' => $this->request->getPost('nama_toko'),
+            'slogan' => $this->request->getPost('slogan'),
+            'alamat' => $this->request->getPost('alamat'),
+            'no_telpon' => $this->request->getPost('no_telpon'),
+            'deskripsi' => $this->request->getPost('deskripsi'),
+        ];
+        $this->ModelAdmin->UpdateData($data);
+        session()->setFlashdata('pesan', 'Data Berhasil Diupdate!');
+        return redirect()->to('Admin/Setting');
     }
 }
