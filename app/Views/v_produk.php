@@ -140,8 +140,6 @@
                         <label for="">Stok</label>
                         <input name="stok" type="number" value="<?= old('stok') ?>" class="form-control" placeholder="Stok" required>
                     </div>
-
-
                 
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -155,6 +153,116 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+        
+        <?php foreach ($produk as $key => $value) { ?>
+            <!-- Modal Edit Data -->
+            <div class="modal fade" id="edit-data<?= $value['id_produk'] ?>">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title">Edit Data <?= $subjudul ?></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <?php echo form_open('Produk/UpdateData/' . $value['id_produk']) ?>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="">Kode Produk</label>
+                            <input name="kode_produk" class="form-control" value="<?= $value['kode_produk'] ?>" placeholder="Kode Produk" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Nama Produk</label>
+                            <input name="nama_produk" class="form-control" value="<?= $value['nama_produk'] ?>" placeholder="Nama Produk" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Kategori</label>
+                            <select name="id_kategori" class="form-control">
+                                <option value="">--Pilih Kategori--</option>
+                                <?php foreach ($kategori as $key => $k) { ?>
+                                    <option value="<?= $k['id_kategori'] ?>" <?= $value['id_kategori'] == $k['id_kategori'] ? 'Selected' : '' ?>><?= $k['nama_kategori'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Satuan</label>
+                            <select name="id_satuan" class="form-control">
+                                <option value="">--Pilih Satuan--</option>
+                                <?php foreach ($satuan as $key => $s) { ?>
+                                    <option value="<?= $s['id_satuan'] ?>" <?= $value['id_satuan'] == $s['id_satuan'] ? 'Selected' : '' ?>><?= $s['nama_satuan'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Harga Beli</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Rp.</span>
+                                </div>
+                                <input name="harga_beli" id="harga_beli<?= $value['id_produk'] ?>" value="<?= $value['harga_beli'] ?>" class="form-control" placeholder="Harga Beli" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Harga Jual</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Rp.</span>
+                                </div>
+                                <input name="harga_jual" id="harga_jual<?= $value['id_produk'] ?>" value="<?= $value['harga_jual'] ?>" class="form-control" placeholder="Harga Jual" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Stok</label>
+                            <input name="stok" type="number" value="<?= $value['stok'] ?>" class="form-control" placeholder="Stok" required>
+                        </div>
+                    
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-flat">Save</button>
+                    </div>
+                    <?php echo form_close() ?>
+                </div>
+                <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+        <?php } ?>
+        
+        <!-- Modal Delete Data -->
+        <?php foreach ($produk as $key => $value) { ?>
+            <div class="modal fade" id="delete-data<?= $value['id_produk'] ?>">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title">Delete Data <?= $subjudul ?></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        Apakah Anda Yakin Hapus <b><?= $value['nama_produk'] ?></b> ..?
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                    <a href="<?= base_url('Produk/DeleteData/' . $value['id_produk']) ?>" class="btn btn-danger btn-flat">Delete</a>
+                    </div>
+                    
+                </div>
+                <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+        <?php } ?>
 
         <script>
             $(function () {
@@ -176,4 +284,16 @@
                 digitGroupSeparator        : ',',
                 decimalPlaces: 0,
             });
+
+            <?php foreach ($produk as $key => $value) { ?> 
+                new AutoNumeric('#harga_beli<?= $value['id_produk'] ?>', {
+                    digitGroupSeparator        : ',',
+                    decimalPlaces: 0,
+                });
+
+                new AutoNumeric('#harga_jual<?= $value['id_produk'] ?>', {
+                    digitGroupSeparator        : ',',
+                    decimalPlaces: 0,
+                });
+            <?php } ?>
         </script>

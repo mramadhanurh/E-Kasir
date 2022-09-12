@@ -76,4 +76,53 @@ class Produk extends BaseController
             return redirect()->to(base_url('Produk'))->withInput('validation',\Config\Services::validation());
         }
     }
+
+    public function UpdateData($id_produk)
+    {
+        if ($this->validate([
+            'id_kategori' => [
+                'label' => 'Kategori',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Belum Dipilih!',
+                ]
+            ],
+            'id_satuan' => [
+                'label' => 'Satuan',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Belum Dipilih!',
+                ]
+            ],
+            
+        ])) {
+            $hargabeli = str_replace(",", "", $this->request->getPost('harga_beli'));
+            $hargajual = str_replace(",", "", $this->request->getPost('harga_jual'));
+            $data = [
+                'id_produk' => $id_produk,
+                'nama_produk' => $this->request->getPost('nama_produk'),
+                'id_kategori' => $this->request->getPost('id_kategori'),
+                'id_satuan' => $this->request->getPost('id_satuan'),
+                'harga_beli' => $hargabeli,
+                'harga_jual' => $hargajual,
+                'stok' => $this->request->getPost('stok'),
+            ];
+            $this->ModelProduk->UpdateData($data);
+            session()->setFlashdata('pesan', 'Data Berhasil Diupdate!');
+            return redirect()->to(base_url('Produk'));
+        } else {
+            session()->setFlashdata('errors', \Config\Services::validation()->getErrors());
+            return redirect()->to(base_url('Produk'))->withInput('validation',\Config\Services::validation());
+        }
+    }
+
+    public function DeleteData($id_produk)
+    {
+        $data = [
+            'id_produk' => $id_produk
+        ];
+        $this->ModelProduk->DeleteData($data);
+        session()->setFlashdata('pesan', 'Data Berhasil Dihapus!');
+        return redirect()->to('Produk');
+    }
 }
