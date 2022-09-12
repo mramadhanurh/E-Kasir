@@ -23,6 +23,8 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'filteradmin' => \App\Filters\FilterAdmin::class,
+        'filterkasir' => \App\Filters\FilterKasir::class,
     ];
 
     /**
@@ -33,14 +35,40 @@ class Filters extends BaseConfig
      */
     public $globals = [
         'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
+            'filteradmin' => [
+                'except' => [
+                    'Home', 'Home/*',
+                    '/',
+                ]
+            ],
+            'filterkasir' => [
+                'except' => [
+                    'Home', 'Home/*',
+                    '/',
+                ]
+            ]
         ],
         'after' => [
             'toolbar',
-            // 'honeypot',
-            // 'secureheaders',
+            'filteradmin' => [
+                'except' => [
+                    'Home', 'Home/*',
+                    '/',
+                    'Admin', 'Admin/*',
+                    'Penjualan', 'Penjualan/*',
+                    'Produk', 'Produk/*',
+                    'Kategori', 'Kategori/*',
+                    'Satuan', 'Satuan/*',
+                    'User', 'User/*',
+                ]
+            ],
+            'filterkasir' => [
+                'except' => [
+                    'Home', 'Home/*',
+                    '/',
+                    'Penjualan', 'Penjualan/*',
+                ]
+            ]
         ],
     ];
 
