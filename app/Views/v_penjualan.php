@@ -120,7 +120,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <h5 class="card-title m-0"></h5>
               </div>
               <div class="card-body bg-black color-palette text-right">
-                <label class="display-4 text-green">Rp. 1,500,500,-</label>
+                <label class="display-4 text-green">Rp. <?= number_format($grand_total, 0) ?>.-</label>
               </div>
             </div>
           </div>
@@ -130,10 +130,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                        <?php echo form_open() ?>
+                        <?php echo form_open('Penjualan/InsertCart') ?>
                             <div class="row">
                                 <div class="col-2 input-group">
-                                    <input name="kode_produk" id="kode_produk" class="form-control" placeholder="Barcode/Kode Produk" autocomplete="off">
+                                    <input name="kode_produk" id="kode_produk" class="form-control" placeholder="Barcode/Kode Produk" autocomplete="off" required>
                                     <span class="input-group-append">
                                         <button class="btn btn-primary btn-flat">
                                             <i class="fas fa-search"></i>
@@ -161,7 +161,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                                 <div class="col-3">
                                     <button type="submit" class="btn btn-flat btn-primary"><i class="fas fa-cart-plus"></i> Add</button>
-                                    <button type="reset" class="btn btn-flat btn-warning"><i class="fas fa-sync"></i> Clear</button>
+                                    <a href="<?= base_url('Penjualan/ResetCart') ?>" class="btn btn-flat btn-warning"><i class="fas fa-sync"></i> Reset</a>
                                     <button class="btn btn-flat btn-success"><i class="fas fa-cash-register"></i> Bayar</button>
                                 </div>
                             </div>
@@ -184,17 +184,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </tr>
                                 </thead>
                                 <tbody>
+                                  <?php foreach ($cart as $key => $value) { ?>
                                     <tr>
-                                        <td>111111111</td>
-                                        <td>Sari Roti</td>
-                                        <td>Makanan</td>
-                                        <td class="text-right">@ Rp. 15,000,-</td>
-                                        <td class="text-center">2 PCS</td>
-                                        <td class="text-right">Rp. 30,000,-</td>
+                                        <td><?= $value['id'] ?></td>
+                                        <td><?= $value['name'] ?></td>
+                                        <td><?= $value['options']['nama_kategori'] ?></td>
+                                        <td class="text-right">@Rp. <?= number_format($value['price'], 0) ?>.-</td>
+                                        <td class="text-center"><?= $value['qty'] ?> <?= $value['options']['nama_satuan'] ?></td>
+                                        <td class="text-right">Rp. <?= number_format($value['subtotal'], 0) ?></td>
                                         <td class="text-center">
                                             <a class="btn btn-flat btn-danger btn-sm"><i class="fa fa-times"></i></a>
                                         </td>
                                     </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>

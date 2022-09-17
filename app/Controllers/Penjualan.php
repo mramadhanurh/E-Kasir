@@ -14,9 +14,14 @@ class Penjualan extends BaseController
 
     public function index()
     {
+        $cart = \Config\Services::cart();
+        
+
         $data = [
             'judul' => 'Penjualan',
             'no_faktur' => $this->ModelPenjualan->NoFaktur(),
+            'cart' => $cart->contents(),
+            'grand_total' => $cart->total(),
         ];
         return view('v_penjualan', $data);
     }
@@ -41,5 +46,36 @@ class Penjualan extends BaseController
             ];
         }
         echo json_encode($data);
+    }
+
+    public function InsertCart()
+    {
+        $cart = \Config\Services::cart();
+        $cart->insert(array(
+        'id'      => $this->request->getPost('kode_produk'),
+        'qty'     => $this->request->getPost('qty'),
+        'price'   => $this->request->getPost('harga_jual'),
+        'name'    => $this->request->getPost('nama_produk'),
+        'options' => array(
+            'nama_kategori' => $this->request->getPost('nama_kategori'),
+            'nama_satuan' => $this->request->getPost('nama_satuan'),
+            )
+        ));
+        return redirect()->to(base_url('Penjualan'));
+    }
+
+    public function ViewCart()
+    {
+        $cart = \Config\Services::cart();
+        $data = $cart->contents();
+
+        echo dd($data);
+    }
+
+    public function ResetCart()
+    {
+        $cart = \Config\Services::cart();
+        $cart->destroy();
+        return redirect()->to(base_url('Penjualan'));
     }
 }
