@@ -14,9 +14,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?= base_url('AdminLTE')?>/plugins/fontawesome-free/css/all.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="<?= base_url('AdminLTE')?>/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url('AdminLTE')?>/dist/css/adminlte.min.css">
+
+  <!-- REQUIRED SCRIPTS -->
+
+  <!-- jQuery -->
+  <script src="<?= base_url('AdminLTE')?>/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="<?= base_url('AdminLTE')?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="<?= base_url('AdminLTE')?>/plugins/sweetalert2/sweetalert2.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="<?= base_url('AdminLTE')?>/dist/js/adminlte.min.js"></script>
 </head>
+
+
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
 
@@ -115,9 +130,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
+                        <?php echo form_open() ?>
                             <div class="row">
                                 <div class="col-2 input-group">
-                                    <input name="kode_produk" class="form-control" placeholder="Barcode/Kode Produk">
+                                    <input name="kode_produk" id="kode_produk" class="form-control" placeholder="Barcode/Kode Produk" autocomplete="off">
                                     <span class="input-group-append">
                                         <button class="btn btn-primary btn-flat">
                                             <i class="fas fa-search"></i>
@@ -129,26 +145,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                             
                                 <div class="col-3">
-                                    <input name="nama_produk" class="form-control" placeholder="Nama Produk">
+                                    <input name="nama_produk" class="form-control" placeholder="Nama Produk" readonly>
                                 </div>
                                 <div class="col-1">
-                                    <input name="kategori" class="form-control" placeholder="Kategori">
+                                    <input name="nama_kategori" class="form-control" placeholder="Kategori" readonly>
                                 </div>
                                 <div class="col-1">
-                                    <input name="satuan" class="form-control" placeholder="Satuan">
+                                    <input name="nama_satuan" class="form-control" placeholder="Satuan" readonly>
                                 </div>
                                 <div class="col-1">
-                                    <input name="harga_jual" class="form-control" placeholder="Harga">
+                                    <input name="harga_jual" class="form-control" placeholder="Harga" readonly>
                                 </div>
                                 <div class="col-1">
-                                    <input type="number" min="1" value="1" name="qty" class="form-control text-center" placeholder="QTY">
+                                    <input id="qty" type="number" min="1" value="1" name="qty" class="form-control text-center" placeholder="QTY">
                                 </div>
                                 <div class="col-3">
-                                    <button class="btn btn-flat btn-primary"><i class="fas fa-cart-plus"></i> Add</button>
-                                    <button class="btn btn-flat btn-warning"><i class="fas fa-sync"></i> Clear</button>
+                                    <button type="submit" class="btn btn-flat btn-primary"><i class="fas fa-cart-plus"></i> Add</button>
+                                    <button type="reset" class="btn btn-flat btn-warning"><i class="fas fa-sync"></i> Clear</button>
                                     <button class="btn btn-flat btn-success"><i class="fas fa-cash-register"></i> Bayar</button>
                                 </div>
                             </div>
+                            <?php echo form_close() ?>
                         </div>
                     </div>
                     <hr>
@@ -222,13 +239,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
+<script>
+  $(document).ready(function() {
+    $('#kode_produk').focus();
+    $('#kode_produk').keydown(function(e) {
+      let kode_produk = $('#kode_produk').val();
+      if (e.keyCode == 13) {
+        e.preventDefault();
+        if (kode_produk == '') {
+          Swal.fire('Kode Produk Belum Diinput!')
+        } else {
+          CekProduk();
+        }
+      }
+    });
+  });
 
-<!-- jQuery -->
-<script src="<?= base_url('AdminLTE')?>/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="<?= base_url('AdminLTE')?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="<?= base_url('AdminLTE')?>/dist/js/adminlte.min.js"></script>
+  function CekProduk() {
+    $.ajax({
+      type: "POST",
+      url: "<?= base_url('Penjualan/CekProduk') ?>",
+      data: {
+        kode_produk: $('#kode_produk').val(),
+      },
+      dataType: "JSON",
+      success: function(response) {
+        if (response.nama_produk == '') {
+          Swal.fire('Kode Produk Tidak Terdaftar di Database!');
+        } else {
+          $('[name="nama_produk"]').val(response.nama_produk);
+          $('[name="nama_kategori"]').val(response.nama_kategori);
+          $('[name="nama_satuan"]').val(response.nama_satuan);
+          $('[name="harga_jual"]').val(response.harga_jual);
+          $('#qty').focus();
+        }
+      }
+    });
+  }
+</script>
 </body>
 </html>
