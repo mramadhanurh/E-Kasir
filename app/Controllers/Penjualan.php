@@ -22,6 +22,7 @@ class Penjualan extends BaseController
             'no_faktur' => $this->ModelPenjualan->NoFaktur(),
             'cart' => $cart->contents(),
             'grand_total' => $cart->total(),
+            'produk' => $this->ModelPenjualan->AllProduk(),
         ];
         return view('v_penjualan', $data);
     }
