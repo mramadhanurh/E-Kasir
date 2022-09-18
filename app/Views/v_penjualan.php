@@ -46,6 +46,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="<?= base_url('AdminLTE')?>/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
   <!-- AdminLTE App -->
   <script src="<?= base_url('AdminLTE')?>/dist/js/adminlte.min.js"></script>
+  <!-- Auto Numeric -->
+  <script src="<?= base_url('autoNumeric')?>/src/AutoNumeric.js"></script>
+  <!-- Angka Terbilang -->
+  <script src="<?= base_url('terbilang')?>/terbilang.js"></script>
 </head>
 
 
@@ -228,7 +232,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <h5 class="card-title m-0"></h5>
               </div>
               <div class="card-body bg-black color-palette text-center">
-                <h1 class="text-warning">Satu Juta Lima Ratus Ribu Lima Ratus Rupiah</h1>
+                <h1 class="text-warning" id="terbilang"></h1>
               </div>
             </div>
           </div>
@@ -258,6 +262,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <th>Kode/Barcode</th>
                     <th>Nama Produk</th>
                     <th>Harga Jual</th>
+                    <th>Stok</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -269,6 +274,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <td><?= $value['kode_produk'] ?></td>
                       <td><?= $value['nama_produk'] ?></td>
                       <td><?= $value['harga_jual'] ?></td>
+                      <td><?= $value['stok'] ?></td>
                       <td>
                         <button onclick="PilihProduk(<?= $value['kode_produk'] ?>)" class="btn btn-success btn-xs"> Pilih</button>
                       </td>
@@ -305,6 +311,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script>
   $(document).ready(function() {
     $('#kode_produk').focus();
+    
+    <?php if ($grand_total == 0) { ?>
+      document.getElementById('terbilang').innerHTML = 'Nol Rupiah';
+    <?php } else { ?>
+      document.getElementById('terbilang').innerHTML = terbilang(<?= $grand_total ?>) + ' Rupiah';
+    <?php } ?>
+    
     $('#kode_produk').keydown(function(e) {
       let kode_produk = $('#kode_produk').val();
       if (e.keyCode == 13) {
