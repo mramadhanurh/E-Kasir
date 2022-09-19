@@ -79,4 +79,11 @@ class Penjualan extends BaseController
         $cart->destroy();
         return redirect()->to(base_url('Penjualan'));
     }
+
+    public function RemoveItemCart($rowid)
+    {
+        $cart = \Config\Services::cart();
+        $cart->remove($rowid);
+        return redirect()->to(base_url('Penjualan'));
+    }
 }

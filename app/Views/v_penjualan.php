@@ -214,7 +214,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <td class="text-center"><?= $value['qty'] ?> <?= $value['options']['nama_satuan'] ?></td>
                                         <td class="text-right">Rp. <?= number_format($value['subtotal'], 0) ?></td>
                                         <td class="text-center">
-                                            <a class="btn btn-flat btn-danger btn-sm"><i class="fa fa-times"></i></a>
+                                            <a href="<?= base_url('Penjualan/RemoveItemCart/' . $value['rowid']) ?>" class="btn btn-flat btn-danger btn-sm"><i class="fa fa-times"></i></a>
                                         </td>
                                     </tr>
                                     <?php } ?>
