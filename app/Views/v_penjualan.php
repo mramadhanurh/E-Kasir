@@ -183,7 +183,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <div class="col-3">
                                     <button type="submit" class="btn btn-flat btn-primary"><i class="fas fa-cart-plus"></i> Add</button>
                                     <a href="<?= base_url('Penjualan/ResetCart') ?>" class="btn btn-flat btn-warning"><i class="fas fa-sync"></i> Reset</a>
-                                    <a class="btn btn-flat btn-success" data-toggle="modal" data-target="#pembayaran"><i class="fas fa-cash-register"></i> Pembayaran</a>
+                                    <a class="btn btn-flat btn-success" data-toggle="modal" data-target="#pembayaran" onclick="Pembayaran()"><i class="fas fa-cash-register"></i> Pembayaran</a>
                                 </div>
                             </div>
                           <?php echo form_close() ?>
@@ -290,6 +290,60 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </div>
       <!-- /.modal -->
 
+      <!-- Modal Pembayaran -->
+      <div class="modal fade" id="pembayaran">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Transaksi Pembayaran</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <?php echo form_open() ?>
+              <div class="form-group">
+                  <label for="">Hasil Total</label>
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">Rp.</span>
+                      </div>
+                      <input name="grand_total" id="grand_total" value="<?= number_format($grand_total, 0) ?>" class="form-control form-control-lg text-right text-danger" placeholder="Harga Beli" readonly>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="">Dibayar</label>
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">Rp.</span>
+                      </div>
+                      <input name="dibayar" id="dibayar" class="form-control form-control-lg text-right text-success" autocomplete="off">
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label for="">Kembalian</label>
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">Rp.</span>
+                      </div>
+                      <input name="kembalian" id="kembalian" class="form-control form-control-lg text-right text-primary" readonly>
+                  </div>
+              </div>
+              <?php echo form_close() ?>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary btn-flat"><i class="fas fa-save"></i> Save Transaksi</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -329,6 +383,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
       }
     });
+
+    //hitung kembalian
+    $('#dibayar').keyup(function(e) {
+      HitungKembalian();
+    });
   });
 
   function CekProduk() {
@@ -358,6 +417,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
     $('#cari-produk').modal('hide');
     $('#kode_produk').focus();
   }
+
+  function Pembayaran() {
+    $('#pembayaran').modal('show');
+  }
+
+  new AutoNumeric('#dibayar', {
+      digitGroupSeparator : ',',
+      decimalPlaces: 0,
+  });
+
+  function HitungKembalian() {
+    let grand_total = $('#grand_total').val().replace(/[^.\d]/g, '').toString();
+    let dibayar = $('#dibayar').val().replace(/[^.\d]/g, '').toString();
+
+    let kembalian = parseFloat(dibayar) - parseFloat(grand_total);
+    $('#kembalian').val(kembalian);
+
+    new AutoNumeric('#kembalian', {
+      digitGroupSeparator : ',',
+      decimalPlaces: 0,
+    });
+
+  }
 </script>
 <script>
   $(function () {
@@ -369,6 +451,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       "ordering": false,
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
+
 </script>
 </body>
 </html>
