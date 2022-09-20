@@ -236,6 +236,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </div>
             </div>
           </div>
+          <div class="col-12">
+            <?php
+                if (session()->getFlashdata('pesan')) {
+                    echo '<div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <i class="icon fas fa-check"></i>';
+                    echo session()->getFlashdata('pesan');
+                    echo '</div>';
+                }
+            ?>
+          </div>
           <!-- /.col-md-6 -->
         </div>
         <!-- /.row -->
@@ -301,7 +312,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </button>
             </div>
             <div class="modal-body">
-              <?php echo form_open() ?>
+              <?php echo form_open('Penjualan/SimpanTransaksi') ?>
               <div class="form-group">
                   <label for="">Hasil Total</label>
                   <div class="input-group mb-3">
@@ -331,12 +342,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <input name="kembalian" id="kembalian" class="form-control form-control-lg text-right text-primary" readonly>
                   </div>
               </div>
-              <?php echo form_close() ?>
+              
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary btn-flat"><i class="fas fa-save"></i> Save Transaksi</button>
+              <button type="submit" class="btn btn-primary btn-flat"><i class="fas fa-save"></i> Save Transaksi</button>
             </div>
+            <?php echo form_close() ?>
           </div>
           <!-- /.modal-content -->
         </div>
