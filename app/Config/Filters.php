@@ -60,6 +60,7 @@ class Filters extends BaseConfig
                     'Kategori', 'Kategori/*',
                     'Satuan', 'Satuan/*',
                     'User', 'User/*',
+                    'Laporan', 'Laporan/*',
                 ]
             ],
             'filterkasir' => [

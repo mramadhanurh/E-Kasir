@@ -157,6 +157,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+          <li class="nav-item <?= $menu == 'laporan' ? 'menu-open' : '' ?>">
+            <a href="#" class="nav-link <?= $menu == 'laporan' ? 'active' : '' ?>">
+                <i class="nav-icon fas fa-file-invoice"></i>
+              <p>
+                Laporan
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('Produk') ?>" class="nav-link <?= $submenu == 'produk' ? 'active' : '' ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Laporan Harian</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('Kategori') ?>" class="nav-link <?= $submenu == 'kategori' ? 'active' : '' ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Laporan Bulanan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('Satuan') ?>" class="nav-link <?= $submenu == 'satuan' ? 'active' : '' ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Laporan Tahunan</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           <li class="nav-item">
              <a href="<?= base_url('Admin/setting') ?>" class="nav-link <?= $menu == 'setting' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-cogs"></i>
