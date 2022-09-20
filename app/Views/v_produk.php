@@ -50,7 +50,7 @@
                     <tbody>
                         <?php $no = 1;
                         foreach ($produk as $key => $value) { ?>
-                            <tr>
+                            <tr class="<?= $value['stok'] == 0 ? 'bg-danger' : '' ?>">
                                 <td class="text-center"><?= $no++ ?></td>
                                 <td class="text-center"><?= $value['kode_produk'] ?></td>
                                 <td><?= $value['nama_produk'] ?></td>
