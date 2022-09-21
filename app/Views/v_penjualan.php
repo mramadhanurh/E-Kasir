@@ -180,6 +180,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <div class="col-1">
                                     <input id="qty" type="number" min="1" value="1" name="qty" class="form-control text-center" placeholder="QTY">
                                 </div>
+                                <input name="harga_beli" type="hidden">
                                 <div class="col-3">
                                     <button type="submit" class="btn btn-flat btn-primary"><i class="fas fa-cart-plus"></i> Add</button>
                                     <a href="<?= base_url('Penjualan/ResetCart') ?>" class="btn btn-flat btn-warning"><i class="fas fa-sync"></i> Reset</a>
@@ -418,6 +419,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           $('[name="nama_kategori"]').val(response.nama_kategori);
           $('[name="nama_satuan"]').val(response.nama_satuan);
           $('[name="harga_jual"]').val(response.harga_jual);
+          $('[name="harga_beli"]').val(response.harga_beli);
           $('#qty').focus();
         }
       }

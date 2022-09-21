@@ -37,6 +37,7 @@ class Penjualan extends BaseController
                 'nama_kategori' => '',
                 'nama_satuan' => '',
                 'harga_jual' => '',
+                'harga_beli' => '',
             ];
         } else {
             $data = [
@@ -44,6 +45,7 @@ class Penjualan extends BaseController
                 'nama_kategori' => $produk['nama_kategori'],
                 'nama_satuan' => $produk['nama_satuan'],
                 'harga_jual' => $produk['harga_jual'],
+                'harga_beli' => $produk['harga_beli'],
             ];
         }
         echo json_encode($data);
@@ -60,6 +62,7 @@ class Penjualan extends BaseController
         'options' => array(
             'nama_kategori' => $this->request->getPost('nama_kategori'),
             'nama_satuan' => $this->request->getPost('nama_satuan'),
+            'modal' => $this->request->getPost('harga_beli'),
             )
         ));
         return redirect()->to(base_url('Penjualan'));
@@ -99,9 +102,11 @@ class Penjualan extends BaseController
             $data = [
                 'no_faktur' => $no_faktur,
                 'kode_produk' => $value['id'],
-                'harga_jual' => $value['price'],
+                'harga' => $value['price'],
+                'modal' => $value['options']['modal'],
                 'qty' => $value['qty'],
                 'total_harga' => $value['subtotal'],
+                'untung' => ($value['price'] - $value['options']['modal']) * $value['qty'],
             ];
             $this->ModelPenjualan->InsertRinciJual($data);
         }
