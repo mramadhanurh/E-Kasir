@@ -57,4 +57,16 @@ class Laporan extends BaseController
         echo json_encode($response);
         //echo dd($this->ModelLaporan->DataHarian($tgl));
     }
+
+    public function PrintLaporanHarian($tgl)
+    {
+        $data = [
+            'judul' => 'Laporan Harian Penjualan',
+            'web' => $this->ModelAdmin->DetailData(),
+            'page' => 'laporan/v_print_lap_harian',
+            'dataharian' => $this->ModelLaporan->DataHarian($tgl),
+            'tgl' => $tgl,
+        ];
+        return view('laporan/v_template_print_laporan', $data);
+    }
 }

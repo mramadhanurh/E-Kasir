@@ -16,7 +16,7 @@
                                 <button onclick="ViewTabelLaporan()" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#cari-produk">
                                     <i class="fas fa-file-alt"></i> View Laporan
                                 </button>
-                                <button class="btn btn-success btn-flat">
+                                <button onclick="PrintLaporan()" class="btn btn-success btn-flat">
                                     <i class="fas fa-print"></i> Print Laporan
                                 </button>
                             </span>
@@ -39,18 +39,31 @@
 <script>
     function ViewTabelLaporan() {
         let tgl = $('#tgl').val();
-        $.ajax({
-            type: "POST",
-            url: "<?= base_url('Laporan/ViewLaporanHarian') ?>",
-            data : {
-                tgl: tgl,
-            },
-            dataType: "JSON",
-            success : function(response) {
-                if (response.data) {
-                    $('.Tabel ').html(response.data)
+        if (tgl == "") {
+            Swal.fire('Tanggal Belum Dipilih!')
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url('Laporan/ViewLaporanHarian') ?>",
+                data : {
+                    tgl: tgl,
+                },
+                dataType: "JSON",
+                success : function(response) {
+                    if (response.data) {
+                        $('.Tabel ').html(response.data)
+                    }
                 }
-            }
-        });
+            });
+        }
+    }
+
+    function PrintLaporan() {
+        let tgl = $('#tgl').val();
+        if (tgl == "") {
+            Swal.fire('Tanggal Belum Dipilih!')
+        }else{
+            NewWin = window.open('<?= base_url('Laporan/PrintLaporanHarian') ?>/' + tgl, 'NewWin', 'toolbar=no, width=1200,height=800,scrollbars=yes');
+        }
     }
 </script>
