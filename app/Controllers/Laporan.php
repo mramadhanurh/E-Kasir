@@ -69,4 +69,37 @@ class Laporan extends BaseController
         ];
         return view('laporan/v_template_print_laporan', $data);
     }
+
+    public function LaporanBulanan()
+    {
+        $data = [
+            'judul' => 'Laporan',
+            'subjudul' => 'Laporan Bulanan',
+            'menu' => 'laporan',
+            'submenu' => 'laporan-bulanan',
+            'page' => 'laporan/v_laporan_bulanan',
+            'web' => $this->ModelAdmin->DetailData(),
+        ];
+        return view('v_template', $data);
+    }
+
+    public function ViewLaporanBulanan()
+    {
+        $bulan = $this->request->getPost('bulan');
+        $tahun = $this->request->getPost('tahun');
+        $data = [
+            'judul' => 'Laporan Bulanan Penjualan',
+            'dataharian' => $this->ModelLaporan->DataTahunan($bulan, $tahun),
+            'web' => $this->ModelAdmin->DetailData(),
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+        ];
+
+        $response = [
+            'data' => view('laporan/v_tabel_laporan_bulanan', $data)
+        ];
+
+        echo json_encode($response);
+        //echo dd($this->ModelLaporan->DataHarian($tgl));
+    }
 }
