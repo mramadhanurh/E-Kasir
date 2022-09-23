@@ -23,7 +23,7 @@ class ModelLaporan extends Model
         ->get()->getResultArray();
     }
 
-    public function DataTahunan($bulan, $tahun)
+    public function DataBulanan($bulan, $tahun)
     {
         return $this->db->table('tbl_rinci_jual')
         ->join('tbl_jual', 'tbl_jual.no_faktur=tbl_rinci_jual.no_faktur')
@@ -31,6 +31,18 @@ class ModelLaporan extends Model
         ->where('year(tbl_jual.tgl_jual)', $tahun)
         ->select('tbl_jual.tgl_jual')
         ->groupBy('tbl_jual.tgl_jual')
+        ->selectSum('tbl_rinci_jual.total_harga')
+        ->selectSum('tbl_rinci_jual.untung')
+        ->get()->getResultArray();
+    }
+
+    public function DataTahunan($tahun)
+    {
+        return $this->db->table('tbl_rinci_jual')
+        ->join('tbl_jual', 'tbl_jual.no_faktur=tbl_rinci_jual.no_faktur')
+        ->where('year(tbl_jual.tgl_jual)', $tahun)
+        ->select('month(tbl_jual.tgl_jual) as bulan')
+        ->groupBy('month(tbl_jual.tgl_jual)')
         ->selectSum('tbl_rinci_jual.total_harga')
         ->selectSum('tbl_rinci_jual.untung')
         ->get()->getResultArray();

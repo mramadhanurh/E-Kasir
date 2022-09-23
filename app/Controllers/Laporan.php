@@ -89,7 +89,7 @@ class Laporan extends BaseController
         $tahun = $this->request->getPost('tahun');
         $data = [
             'judul' => 'Laporan Bulanan Penjualan',
-            'databulanan' => $this->ModelLaporan->DataTahunan($bulan, $tahun),
+            'databulanan' => $this->ModelLaporan->DataBulanan($bulan, $tahun),
             'web' => $this->ModelAdmin->DetailData(),
             'bulan' => $bulan,
             'tahun' => $tahun,
@@ -109,8 +109,51 @@ class Laporan extends BaseController
             'judul' => 'Laporan Bulanan Penjualan',
             'web' => $this->ModelAdmin->DetailData(),
             'page' => 'laporan/v_print_lap_bulanan',
-            'databulanan' => $this->ModelLaporan->DataTahunan($bulan, $tahun),
+            'databulanan' => $this->ModelLaporan->DataBulanan($bulan, $tahun),
             'bulan' => $bulan,
+            'tahun' => $tahun,
+        ];
+        return view('laporan/v_template_print_laporan', $data);
+    }
+
+    public function LaporanTahunan()
+    {
+        $data = [
+            'judul' => 'Laporan',
+            'subjudul' => 'Laporan Tahunan',
+            'menu' => 'laporan',
+            'submenu' => 'laporan-tahunan',
+            'page' => 'laporan/v_laporan_tahunan',
+            'web' => $this->ModelAdmin->DetailData(),
+        ];
+        return view('v_template', $data);
+    }
+
+    public function ViewLaporanTahunan()
+    {
+        $tahun = $this->request->getPost('tahun');
+        $data = [
+            'judul' => 'Laporan Tahunan Penjualan',
+            'datatahunan' => $this->ModelLaporan->DataTahunan($tahun),
+            'web' => $this->ModelAdmin->DetailData(),
+            'tahun' => $tahun,
+        ];
+
+        $response = [
+            'data' => view('laporan/v_tabel_laporan_tahunan', $data)
+        ];
+
+        echo json_encode($response);
+        //echo dd($this->ModelLaporan->DataHarian($tgl));
+    }
+
+    public function PrintLaporanTahunan($tahun)
+    {
+        $data = [
+            'judul' => 'Laporan Tahunan Penjualan',
+            'web' => $this->ModelAdmin->DetailData(),
+            'page' => 'laporan/v_print_lap_tahunan',
+            'datatahunan' => $this->ModelLaporan->DataTahunan($tahun),
             'tahun' => $tahun,
         ];
         return view('laporan/v_template_print_laporan', $data);
