@@ -89,7 +89,7 @@ class Laporan extends BaseController
         $tahun = $this->request->getPost('tahun');
         $data = [
             'judul' => 'Laporan Bulanan Penjualan',
-            'dataharian' => $this->ModelLaporan->DataTahunan($bulan, $tahun),
+            'databulanan' => $this->ModelLaporan->DataTahunan($bulan, $tahun),
             'web' => $this->ModelAdmin->DetailData(),
             'bulan' => $bulan,
             'tahun' => $tahun,
@@ -101,5 +101,18 @@ class Laporan extends BaseController
 
         echo json_encode($response);
         //echo dd($this->ModelLaporan->DataHarian($tgl));
+    }
+
+    public function PrintLaporanBulanan($bulan, $tahun)
+    {
+        $data = [
+            'judul' => 'Laporan Bulanan Penjualan',
+            'web' => $this->ModelAdmin->DetailData(),
+            'page' => 'laporan/v_print_lap_bulanan',
+            'databulanan' => $this->ModelLaporan->DataTahunan($bulan, $tahun),
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+        ];
+        return view('laporan/v_template_print_laporan', $data);
     }
 }

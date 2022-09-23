@@ -1,21 +1,3 @@
-<div class="row">
-    <div class="col-12 text-center">
-
-    <address>
-        <i class="fas fa-shopping-cart fa-3x text-primary"></i>
-        <font size=9 class="text-primary"><?= $web['nama_toko'] ?></font><br>
-        <strong class="text-primary"><?= $web['slogan'] ?></strong><br>
-        <strong><?= $web['alamat'] ?></strong><br>
-        <strong><?= $web['no_telpon'] ?></strong><br>
-    </address>
-    </div>
-    <div class="col-12 text-center">
-    <hr>
-        <b>
-            <h4><?= $judul ?></h4>
-        </b>
-    </div>
-
     <div class="col-12">
         <b>Bulan :</b> <?= $bulan ?> <b>Tahun :</b> <?= $tahun ?>
         <table class="table table-bordered table-striped">
@@ -51,5 +33,3 @@
             </tr>
         </table>
     </div>
-</div>
-

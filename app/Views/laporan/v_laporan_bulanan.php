@@ -91,11 +91,14 @@
     }
 
     function PrintLaporan() {
-        let tgl = $('#tgl').val();
-        if (tgl == "") {
-            Swal.fire('Tanggal Belum Dipilih!')
+        let bulan = $('#bulan').val();
+        let tahun = $('#tahun').val();
+        if (bulan == "") {
+            Swal.fire('Bulan Belum Dipilih!')
+        } else if(tahun == "") {
+            Swal.fire('Tahun Belum Dipilih!')
         }else{
-            NewWin = window.open('<?= base_url('Laporan/PrintLaporanHarian') ?>/' + tgl, 'NewWin', 'toolbar=no, width=1200,height=800,scrollbars=yes');
+            NewWin = window.open('<?= base_url('Laporan/PrintLaporanBulanan') ?>/' + bulan + '/' + tahun, 'NewWin', 'toolbar=no, width=1200,height=800,scrollbars=yes');
         }
     }
 </script>
