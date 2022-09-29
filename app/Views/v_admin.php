@@ -2,7 +2,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3><?= $jml_produk ?></h3>
 
                 <p>Produk</p>
               </div>
@@ -17,7 +17,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3><?= $jml_kategori ?></h3>
 
                 <p>Kategori</p>
               </div>
@@ -32,7 +32,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3><?= $jml_satuan ?></h3>
 
                 <p>Satuan</p>
               </div>
@@ -47,7 +47,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3><?= $jml_user ?></h3>
 
                 <p>User</p>
               </div>
@@ -64,8 +64,8 @@
               <span class="info-box-icon"><i class="fas fa-money-bill-wave"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Income Hari</span>
-                <span class="info-box-number">Rp. 5,200</span>
+                <span class="info-box-text">Pendapatan Hari</span>
+                <span class="info-box-number">Rp. <?= number_format($p_hari_ini['total_harga'], 0) ?></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -77,8 +77,8 @@
               <span class="info-box-icon"><i class="fas fa-money-bill-wave"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Income Bulan Ini</span>
-                <span class="info-box-number">Rp. 5,200</span>
+                <span class="info-box-text">Pendapatan Bulan Ini</span>
+                <span class="info-box-number">Rp. <?= number_format($p_bulan_ini['total_harga'], 0) ?></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -90,8 +90,8 @@
               <span class="info-box-icon"><i class="fas fa-money-bill-wave"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Income Tahun Ini</span>
-                <span class="info-box-number">Rp. 5,200</span>
+                <span class="info-box-text">Pendapatan Tahun Ini</span>
+                <span class="info-box-number">Rp. <?= number_format($p_tahun_ini['total_harga'], 0) ?></span>
               </div>
               <!-- /.info-box-content -->
             </div>

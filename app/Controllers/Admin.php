@@ -21,6 +21,13 @@ class Admin extends BaseController
             'submenu' => '',
             'page' => 'v_admin',
             'grafik' => $this->ModelAdmin->Grafik(),
+            'p_hari_ini' => $this->ModelAdmin->PendapatanHariIni(),
+            'p_bulan_ini' => $this->ModelAdmin->PendapatanBulanIni(),
+            'p_tahun_ini' => $this->ModelAdmin->PendapatanTahunIni(),
+            'jml_produk' => $this->ModelAdmin->JumlahProduk(),
+            'jml_kategori' => $this->ModelAdmin->JumlahKategori(),
+            'jml_satuan' => $this->ModelAdmin->JumlahSatuan(),
+            'jml_user' => $this->ModelAdmin->JumlahUser(),
         ];
         return view('v_template', $data);
     }
