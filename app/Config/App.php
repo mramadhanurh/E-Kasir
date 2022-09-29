@@ -26,6 +26,7 @@ class App extends BaseConfig
      */
     //public $baseURL = 'http://localhost:8080/'; //dengan spark server
     public $baseURL = 'http://localhost/kasir-ci4/public/'; //cara biasa
+    //public $baseURL = 'http://192.168.137.1/kasir-ci4/public/';
 
     /**
      * --------------------------------------------------------------------------
